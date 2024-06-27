@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css'; // CSS 파일을 import 합니다
+import './App.css';
 
 function App() {
   const [userInput, setUserInput] = useState('');
   const [output, setOutput] = useState('');
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (userInput.trim() === '') return;
 
@@ -58,7 +58,7 @@ function App() {
       console.error('Error fetching data from OpenAI API', error);
       setOutput('Error generating response. Please try again.');
     } finally {
-      setLoading(false); // 요청 완료 후 로딩 상태 해제
+      setLoading(false);
     }
   };
 
@@ -69,7 +69,7 @@ function App() {
         <textarea
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          placeholder="힘든 상황을 입력하세요"
+          placeholder="힘든 상황을 입력하세요. 럭키비키! 원영적 사고로 바꾸어 드릴게요!"
         />
         <button type="submit">변환하기!</button>
       </form>

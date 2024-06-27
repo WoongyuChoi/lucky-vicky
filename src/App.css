@@ -23,7 +23,7 @@ textarea {
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #f49ac2; /* Pantone 212 C */
+  background-color: #f49ac2;
   color: white;
   border: none;
   cursor: pointer;
@@ -32,7 +32,7 @@ button {
 }
 
 button:hover {
-  background-color: #d769a6; /* Slightly darker shade for hover effect */
+  background-color: #d769a6;
 }
 
 .loading {
