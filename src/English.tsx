@@ -77,12 +77,17 @@ function English() {
     if (!element) return;
 
     const canvas = await html2canvas(element);
-    const data = canvas.toDataURL('image/png');
-
-    const link = document.createElement('a');
-    link.href = data;
-    link.download = 'result.png';
-    link.click();
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'result.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
   };
 
   return (
@@ -95,8 +100,7 @@ function English() {
             <textarea
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Share a difficult situation you're facing. Lucky Vicky! 🤭 I'll transform it using Wonyoung's Positive Thinking!
-          For example: I didn't get the job I really wanted...😭"
+              placeholder="Share a difficult situation you're facing. Lucky Vicky! 🤭 I'll transform it using Wonyoung's Positive Thinking! For example: I didn't get the job I really wanted...😭"
             />
             <button type="submit">Convert!</button>
           </form>

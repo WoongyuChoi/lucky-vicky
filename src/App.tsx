@@ -74,18 +74,22 @@ function App() {
     setOutput('');
     setSubmitted(false); // 서버 요청 여부를 false로 변경
   };
-
   const handleSave = async () => {
     const element = document.querySelector('.capture-area') as HTMLElement;
     if (!element) return;
 
     const canvas = await html2canvas(element);
-    const data = canvas.toDataURL('image/png');
-
-    const link = document.createElement('a');
-    link.href = data;
-    link.download = 'result.png';
-    link.click();
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'result.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
   };
 
   return (
