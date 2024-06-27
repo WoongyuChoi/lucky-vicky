@@ -11,6 +11,8 @@ function English() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false); // 서버 요청 여부 상태 추가
 
+  const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (userInput.trim() === '') return;
@@ -51,7 +53,7 @@ function English() {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${openaiApiKey}`,
           },
         },
       );

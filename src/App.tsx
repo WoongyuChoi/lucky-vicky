@@ -11,6 +11,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (userInput.trim() === '') {
@@ -54,7 +56,7 @@ function App() {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${openaiApiKey}`,
           },
         },
       );
@@ -91,6 +93,7 @@ function App() {
       }
     });
   };
+  alert(openaiApiKey);
 
   return (
     <>
