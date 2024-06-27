@@ -70,7 +70,7 @@ function App() {
         <textarea
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          placeholder="힘든 상황을 입력하세요. 럭키비키! 원영적 사고로 바꾸어 드릴게요!"
+          placeholder="힘든 상황을 입력하세요. 럭키비키! 원영적 사고로 바꾸어 드릴게요! ex) 오늘 정말 가고 싶었던 회사의 면접에서 떨어져 버렸어..."
         />
         <button type="submit">변환하기!</button>
       </form>
