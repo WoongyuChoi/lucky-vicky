@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import Footer from './components/Footer';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [userInput, setUserInput] = useState('');
@@ -70,6 +71,7 @@ function App() {
   return (
     <div className="App">
       <h1>🍀 원영적 사고 변환기 🍀</h1>
+      <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
       <form onSubmit={handleSubmit}>
         <textarea
           value={userInput}
