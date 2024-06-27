@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 import './App.css';
 import Footer from './components/Footer';
 import { Link } from 'react-router-dom';
 
-function App() {
+function English() {
   const [userInput, setUserInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false); // 서버 요청 여부 상태 추가
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (userInput.trim() === '') return;
 
-    setLoading(true);
+    setLoading(true); // 요청 시작 시 로딩 상태로 변경
 
     try {
       const response = await axios.post(
@@ -55,50 +57,72 @@ function App() {
       );
       const responseData = response.data.choices[0].message.content.trim();
       setOutput(responseData);
+      setSubmitted(true); // 서버 요청 여부를 true로 변경
     } catch (error) {
       console.error('Error fetching data from OpenAI API', error);
       setOutput('Error generating response. Please try again.');
     } finally {
-      setLoading(false); // End loading state
+      setLoading(false); // 요청 완료 후 로딩 상태 해제
     }
   };
 
   const handleReset = () => {
     setUserInput('');
     setOutput('');
+    setSubmitted(false); // 서버 요청 여부를 false로 변경
+  };
+
+  const handleSave = async () => {
+    const element = document.querySelector('.capture-area') as HTMLElement;
+    if (!element) return;
+
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = data;
+    link.download = 'result.png';
+    link.click();
   };
 
   return (
-    <div className="App">
-      <h1>🍀 Wonyoung's Positive Thinking Converter 🍀</h1>
-      <div>
-        <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-          placeholder="Share a difficult situation you're facing. Lucky Vicky! 🤭 I'll transform it using Wonyoung's Positive Thinking!
+    <>
+      <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
+      <div className="App">
+        <div className="capture-area">
+          <h1>🍀 Wonyoung's Positive Thinking Converter 🍀</h1>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Share a difficult situation you're facing. Lucky Vicky! 🤭 I'll transform it using Wonyoung's Positive Thinking!
           For example: I didn't get the job I really wanted...😭"
-        />
-        <button type="submit">Convert!</button>
-      </form>
-      {loading ? (
-        <div className="loading">
-          <p>Loading...</p>
+            />
+            <button type="submit">Convert!</button>
+          </form>
+          {loading ? (
+            <div className="loading">
+              <p>Loading...</p>
+            </div>
+          ) : (
+            output && (
+              <div className="output">
+                <h2>Wonyoung's Thinking:</h2>
+                <p>{output}</p>
+              </div>
+            )
+          )}
         </div>
-      ) : (
-        output && (
-          <div className="output">
-            <h2>Wonyoung's Thinking:</h2>
-            <p>{output}</p>
+        {submitted && (
+          <div style={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
             <button onClick={handleReset}>Try Again</button>
+            <button onClick={handleSave}>Save Result</button>
           </div>
-        )
-      )}
+        )}
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
-export default App;
+export default English;

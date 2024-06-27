@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 import './App.css';
 import Footer from './components/Footer';
 import { Link } from 'react-router-dom';
@@ -8,10 +9,14 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false); // 서버 요청 여부 상태 추가
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (userInput.trim() === '') return;
+    if (userInput.trim() === '') {
+      alert('내용을 입력해 줘야죠! 😣');
+      return;
+    }
 
     setLoading(true); // 요청 시작 시 로딩 상태로 변경
 
@@ -55,6 +60,7 @@ function App() {
       );
       const responseData = response.data.choices[0].message.content.trim();
       setOutput(responseData);
+      setSubmitted(true); // 서버 요청 여부를 true로 변경
     } catch (error) {
       console.error('Error fetching data from OpenAI API', error);
       setOutput('Error generating response. Please try again.');
@@ -66,35 +72,58 @@ function App() {
   const handleReset = () => {
     setUserInput('');
     setOutput('');
+    setSubmitted(false); // 서버 요청 여부를 false로 변경
+  };
+
+  const handleSave = async () => {
+    const element = document.querySelector('.capture-area') as HTMLElement;
+    if (!element) return;
+
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = data;
+    link.download = 'result.png';
+    link.click();
   };
 
   return (
-    <div className="App">
-      <h1>🍀 원영적 사고 변환기 🍀</h1>
+    <>
       <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-          placeholder="힘든 상황을 입력하세요. 럭키비키! 🤭 원영적 사고로 바꾸어 드릴게요! ex) 오늘 정말 가고 싶었던 회사의 면접에서 떨어져 버렸어..."
-        />
-        <button type="submit">변환하기!</button>
-      </form>
-      {loading ? (
-        <div className="loading">
-          <p>로딩 중...</p>
+      <div className="App">
+        <div className="capture-area">
+          <h1>🍀 원영적 사고 변환기 🍀</h1>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="힘든 상황을 입력하세요. 럭키비키! 🤭 원영적 사고로 바꾸어 드릴게요! ex) 오늘 정말 가고 싶었던 회사의 면접에서 떨어져 버렸어..."
+            />
+            <button type="submit">변환하기!</button>
+          </form>
+          {loading ? (
+            <div className="loading">
+              <p>로딩 중...</p>
+            </div>
+          ) : (
+            output && (
+              <div className="output">
+                <h2>원영적 사고:</h2>
+                <p>{output}</p>
+              </div>
+            )
+          )}
         </div>
-      ) : (
-        output && (
-          <div className="output">
-            <h2>원영적 사고:</h2>
-            <p>{output}</p>
+        {submitted && (
+          <div style={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
             <button onClick={handleReset}>다시 하기</button>
+            <button onClick={handleSave}>결과 저장하기</button>
           </div>
-        )
-      )}
+        )}
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
