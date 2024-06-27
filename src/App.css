@@ -1,0 +1,70 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box; /* Padding and border are included in the element's total width and height */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f49ac2; /* Pantone 212 C */
+  color: white;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d769a6; /* Slightly darker shade for hover effect */
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.output {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+}
+
+@media (max-width: 600px) {
+  textarea {
+    height: 80px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .loading {
+    font-size: 16px;
+  }
+
+  .output {
+    padding: 15px;
+    font-size: 14px;
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css'; // CSS 파일을 import 합니다
 
 function App() {
   const [userInput, setUserInput] = useState('');
@@ -16,7 +17,7 @@ function App() {
       const response = await axios.post(
         'https://api.openai.com/v1/chat/completions',
         {
-          model: 'gpt-3.5-turbo-instruct',
+          model: 'gpt-4o',
           messages: [
             {
               role: 'system',
@@ -63,14 +64,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>원영적 사고 변환기</h1>
+      <h1>🍀 원영적 사고 변환기 🍀</h1>
       <form onSubmit={handleSubmit}>
         <textarea
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="힘든 상황을 입력하세요"
         />
-        <button type="submit">변환하기</button>
+        <button type="submit">변환하기!</button>
       </form>
       {loading ? (
         <div className="loading">
