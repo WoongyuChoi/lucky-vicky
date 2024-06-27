@@ -53,14 +53,18 @@ function App() {
         },
       );
       const responseData = response.data.choices[0].message.content.trim();
-
       setOutput(responseData);
     } catch (error) {
       console.error('Error fetching data from OpenAI API', error);
       setOutput('Error generating response. Please try again.');
     } finally {
-      setLoading(false);
+      setLoading(false); // 요청 완료 후 로딩 상태 해제
     }
+  };
+
+  const handleReset = () => {
+    setUserInput('');
+    setOutput('');
   };
 
   return (
@@ -83,6 +87,7 @@ function App() {
           <div className="output">
             <h2>원영적 사고:</h2>
             <p>{output}</p>
+            <button onClick={handleReset}>다시 하기</button>
           </div>
         )
       )}
