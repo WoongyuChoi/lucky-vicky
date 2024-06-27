@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
-import './App.css';
-import Footer from './components/Footer';
 import { Link } from 'react-router-dom';
+import Footer from './components/Footer';
+import './App.css';
 
 function English() {
   const [userInput, setUserInput] = useState('');
@@ -119,7 +119,9 @@ function English() {
         </div>
         {submitted && (
           <div style={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
-            <button onClick={handleReset}>Try Again</button>
+            <button className="save-button" onClick={handleReset}>
+              Try Again
+            </button>
             <button onClick={handleSave}>Save Result</button>
           </div>
         )}

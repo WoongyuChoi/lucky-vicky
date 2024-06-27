@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
-import './App.css';
-import Footer from './components/Footer';
 import { Link } from 'react-router-dom';
+import Footer from './components/Footer';
+import './App.css';
 
 function App() {
   const [userInput, setUserInput] = useState('');
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false); // 서버 요청 여부 상태 추가
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,7 +60,7 @@ function App() {
       );
       const responseData = response.data.choices[0].message.content.trim();
       setOutput(responseData);
-      setSubmitted(true); // 서버 요청 여부를 true로 변경
+      setSubmitted(true);
     } catch (error) {
       console.error('Error fetching data from OpenAI API', error);
       setOutput('Error generating response. Please try again.');
@@ -122,7 +122,9 @@ function App() {
         {submitted && (
           <div style={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
             <button onClick={handleReset}>다시 하기</button>
-            <button onClick={handleSave}>결과 저장하기</button>
+            <button className="save-button" onClick={handleSave}>
+              결과 저장하기
+            </button>
           </div>
         )}
       </div>

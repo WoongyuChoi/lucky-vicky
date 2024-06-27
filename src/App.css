@@ -59,6 +59,10 @@ button:hover {
     font-size: 14px;
   }
 
+  .save-button {
+    display: none;
+  }
+
   .loading {
     font-size: 16px;
   }
