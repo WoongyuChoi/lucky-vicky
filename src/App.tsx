@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import Footer from './components/Footer';
-import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [userInput, setUserInput] = useState('');
