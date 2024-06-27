@@ -1,14 +1,12 @@
 import React from 'react';
-import Footer from './Footer';
+import styles from './Footer.module.css';
 
-const App: React.FC = () => {
+const Footer: React.FC = () => {
   return (
-    <div className="App">
-      <h1>원영적 사고 변환기</h1>
-      {/* 기존 App 내용 */}
-      <Footer />
+    <div className={styles.footer}>
+      {new Date().getFullYear()} Anne-Hyeyeon. All rights reserved.
     </div>
   );
 };
 
-export default App;
+export default Footer;
