@@ -93,7 +93,6 @@ function App() {
       }
     });
   };
-  alert(openaiApiKey);
 
   return (
     <>
