@@ -92,6 +92,15 @@ function English() {
     });
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const input = event.target.value;
+    if (input.length <= 100) {
+      setUserInput(input);
+    } else {
+      alert('You can only enter up to 100 characters! 😣');
+    }
+  };
+
   return (
     <>
       <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
@@ -101,7 +110,7 @@ function English() {
           <form onSubmit={handleSubmit}>
             <textarea
               value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Share a difficult situation you're facing. Lucky Vicky! 🤭 I'll transform it using Wonyoung's Positive Thinking! For example: I didn't get the job I really wanted...😭"
             />
             <button type="submit">Convert!</button>

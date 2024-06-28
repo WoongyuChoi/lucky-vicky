@@ -76,6 +76,7 @@ function App() {
     setOutput('');
     setSubmitted(false); // 서버 요청 여부를 false로 변경
   };
+
   const handleSave = async () => {
     const element = document.querySelector('.capture-area') as HTMLElement;
     if (!element) return;
@@ -94,6 +95,15 @@ function App() {
     });
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const input = event.target.value;
+    if (input.length <= 100) {
+      setUserInput(input);
+    } else {
+      alert('100자까지만 입력 가능해요! 😣');
+    }
+  };
+
   return (
     <>
       <Link to="/">Korean ver</Link> | <Link to="/english">English ver</Link>
@@ -103,7 +113,7 @@ function App() {
           <form onSubmit={handleSubmit}>
             <textarea
               value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
+              onChange={handleInputChange}
               placeholder="힘든 상황을 입력하세요. 럭키비키! 🤭 원영적 사고로 바꾸어 드릴게요! ex) 오늘 정말 가고 싶었던 회사의 면접에서 떨어져 버렸어..."
             />
             <button type="submit">변환하기!</button>
